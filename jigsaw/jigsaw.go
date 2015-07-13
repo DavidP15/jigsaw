@@ -9,6 +9,7 @@ import (
 	"image/png"
 	"os"
 	"path/filepath"
+	"strconv"
 )
 
 const PIECE_PREFIX = "Piece"
@@ -25,7 +26,6 @@ type Piece struct {
 
 //the main jigsaw struct. holds config info as well as list of pieces
 type Jigsaw struct {
-	Crop               bool    `json:"crop"`
 	FullImageLocation  string  `json:"fullImageLocation"`
 	TemplateLocation   string  `json:"templateLocation"`
 	Pieces             []Piece `json:"pieces"`
@@ -104,6 +104,10 @@ func (jigsaw *Jigsaw) CreateImage(readyImages <-chan int, createdPieces chan<- i
 
 			for i := 0; i < pieceRect.Dy(); i++ {
 				for k := 0; k < pieceRect.Dx(); k++ {
+					if k > jigsaw.FullImage.Bounds().Dx() || i > jigsaw.FullImage.Bounds().Dy() {
+						currentPiece.PieceImage.Set(k, i, jigsaw.OffColor)
+						continue
+					}
 					r, g, b, a := currentPiece.TemplateImage.At(k, i).RGBA()
 					offR, offG, offB, offA := jigsaw.OffColor.RGBA()
 					if r == offR && g == offG && b == offB && a == offA {
@@ -130,7 +134,7 @@ func (jigsaw *Jigsaw) SaveImage(createdPieces <-chan int, done chan<- bool) {
 		if more {
 			fmt.Println("finishing piece", job)
 			pieceImage := jigsaw.Pieces[job].PieceImage.SubImage(jigsaw.Pieces[job].TemplateImage.Bounds())
-			out, err := os.Create(jigsaw.ImageRootDirectory + string(filepath.Separator) + PIECE_DIRECTORY + string(filepath.Separator) + fmt.Sprintf(PIECE_PREFIX, job) + ".png")
+			out, err := os.Create(jigsaw.ImageRootDirectory + string(filepath.Separator) + PIECE_DIRECTORY + string(filepath.Separator) + PIECE_PREFIX + strconv.Itoa(job) + ".png")
 			defer out.Close()
 			if err != nil {
 				fmt.Println(err)
