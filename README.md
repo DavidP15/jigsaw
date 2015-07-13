@@ -1,8 +1,8 @@
 # jigsaw
-A simple application that takes creates jigsaw pieces from an image given template images.
+A simple application that creates jigsaw pieces from an image given template images.
 
 #Usage
-must include a config file. The file should be in json format. A sample is given in this project. The config file should look similar to this:
+You must include a config file. The file should be in json format. A sample is given in this project. The config file should look similar to this:
 ```
 {
   "fullImageLocation": "image file location", /*relative to the image path given as a command line flag */
@@ -10,14 +10,14 @@ must include a config file. The file should be in json format. A sample is given
   "pieces": [
     {
       "fileLocation": "piece1.png",
-      "PieceLocationX": 0,
-      "PieceLocationY": 0
+      "pieceLocationX": 0,
+      "pieceLocationY": 0
     },
     ...
     {
       "fileLocation": "piece10.png",
-      "PieceLocationX": 10, /* the image column*/
-      "PieceLocationY": 0 /* the image row */
+      "pieceLocationX": 10, /* the image column*/
+      "pieceLocationY": 0 /* the image row */
     }
   ],
   "pieceWidth": 43, /*width and height without any overflow. */
@@ -29,7 +29,7 @@ must include a config file. The file should be in json format. A sample is given
   "TemplateOn": 255 /*the color for space the piece does occupy */
 }
 ```
-there are two command line flags. They are init and images. init is the path to your initialization file. images is the path to your images folder.
+There are two command line flags. They are init and images. init is the path to your initialization file. images is the path to your images folder.
 
 You use like this:
 ```
