@@ -25,8 +25,8 @@ You must include a config file. The file should be in json format. A sample is g
   "pieceRows": 10, 
   "pieceColumns": 15,
   "pieceOverflow": 15,
-  "TemplateOff": 0, /*the color for space that the piece does not occupy */
-  "TemplateOn": 255 /*the color for space the piece does occupy */
+  "templateOff": 0, /*the color for space that the piece does not occupy */
+  "templateOn": 255 /*the color for space the piece does occupy */
 }
 ```
 There are two command line flags. They are init and images. init is the path to your initialization file. images is the path to your images folder.
